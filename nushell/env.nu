@@ -93,7 +93,7 @@ if not (which fnm | is-empty) {
   ])
 }
 
-zoxide init nushell | save -f ~/.zoxide.nu
+zoxide init nushell | str replace --all "-- $rest" "-- ...$rest" | str replace --all "def-env" "def --env" | save -f ~/.zoxide.nu
 
 mkdir ~/.cache/starship
 starship init nu | save -f ~/.cache/starship/init.nu

@@ -49,6 +49,9 @@ require("lazy").setup({
 })
 
 require("nvim-treesitter.configs").setup({
+  modules = {},
+  ignore_install = {},
+  sync_install = true,
   ensure_installed = {
     "c",
     "lua",
