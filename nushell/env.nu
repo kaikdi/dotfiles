@@ -1,6 +1,6 @@
 # Nushell Environment Config File
 #
-# version = "0.96.2"
+# version = "0.98.0"
 
 def create_left_prompt [] {
     let dir = match (do --ignore-shell-errors { $env.PWD | path relative-to $nu.home-path }) {
@@ -86,9 +86,6 @@ $env.NU_PLUGIN_DIRS = [
     ($nu.default-config-dir | path join 'plugins') # add <nushell-config-dir>/plugins
 ]
 
-# To load from a custom file you can use:
-# source ($nu.default-config-dir | path join 'custom.nu')
-
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
 # $env.PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
 # An alternate way to add entries to $env.PATH is to use the custom command `path add`
@@ -100,23 +97,5 @@ $env.NU_PLUGIN_DIRS = [
 # path add ($env.HOME | path join ".local" "bin")
 # $env.PATH = ($env.PATH | uniq)
 
-
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/usr/local/bin')
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/opt/homebrew/bin')
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/Users/dimitrios.kaikonidis/.cargo/bin')
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/opt/homebrew/opt/postgresql@15/bin:$PATH')
-
-if not (which fnm | is-empty) {
-  ^fnm env --json | from json | load-env
-  $env.PATH = ($env.PATH | prepend [
-    $"($env.FNM_MULTISHELL_PATH)/bin"
-  ])
-}
-
-zoxide init nushell | str replace --all "-- $rest" "-- ...$rest" | str replace --all "def-env" "def --env" | save -f ~/.zoxide.nu
-
-mkdir ~/.cache/starship
-starship init nu | save -f ~/.cache/starship/init.nu
-
-# Set Editor
-$env.EDITOR = nvim
+# To load from a custom file you can use:
+# source ($nu.default-config-dir | path join 'custom.nu')
